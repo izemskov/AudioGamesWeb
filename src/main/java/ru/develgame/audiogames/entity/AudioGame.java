@@ -1,12 +1,10 @@
 package ru.develgame.audiogames.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "games")
+@NamedNativeQueries({@NamedNativeQuery (name = "getAllGames", query = "select * from games")})
 public class AudioGame {
     @Id
     @Column(name = "id")
