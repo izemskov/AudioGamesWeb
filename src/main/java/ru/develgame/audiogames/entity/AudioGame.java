@@ -1,23 +1,36 @@
 package ru.develgame.audiogames.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "games")
-@NamedNativeQueries({@NamedNativeQuery (name = "getAllGames", query = "select * from games")})
-public class AudioGame {
+@Table(name = "AUDIOGAME", schema = "APP")
+public class AudioGame implements Serializable {
     @Id
-    @Column(name = "id")
-    private Long id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private int id;
 
-    @Column(name = "name")
+    @Column(name = "NAME")
     private String name;
 
-    public Long getId() {
+    @Column(name = "FOLDER")
+    private String folder;
+
+    public AudioGame() {
+    }
+
+    public AudioGame(int id, String name, String folder) {
+        this.id = id;
+        this.name = name;
+        this.folder = folder;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -27,5 +40,13 @@ public class AudioGame {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getFolder() {
+        return folder;
+    }
+
+    public void setFolder(String folder) {
+        this.folder = folder;
     }
 }
