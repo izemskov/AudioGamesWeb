@@ -20,8 +20,7 @@ public class AudioGame implements Serializable {
     public AudioGame() {
     }
 
-    public AudioGame(int id, String name, String folder) {
-        this.id = id;
+    public AudioGame(String name, String folder) {
         this.name = name;
         this.folder = folder;
     }

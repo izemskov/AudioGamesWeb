@@ -23,7 +23,7 @@ public class AudioGamesDaoImpl implements AudioGamesDao {
     private UserTransaction userTransaction;
 
     @Inject
-    private transient Logger logger;
+    private Logger logger;
 
     @Override
     public List<AudioGame> getAllAudioGames() {

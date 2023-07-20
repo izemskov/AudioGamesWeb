@@ -3,14 +3,22 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Image Test</title>
 </h:head>
 <h:body>
     <h:form>
-        <p:commandButton value="Add Audio Game Test" action="#{testdb.a()}" update="@form"/>
+        <ui:repeat value="#{testdb.audioGames}" var="audioGame">
+            <p:fieldset width="220" legend="#{audioGame.name}" style="margin-bottom: 10px;">
+                <p class="m-0" style=" font-size: 14px;">
+                    #{audioGame.folder}
+                </p>
+            </p:fieldset>
+        </ui:repeat>
+
+        <p:commandButton value="Add Audio Game Test" action="#{testdb.addAudioGame()}" update="@form"/>
     </h:form>
 </h:body>
 </html>
