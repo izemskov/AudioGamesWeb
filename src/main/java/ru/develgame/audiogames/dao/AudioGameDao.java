@@ -4,8 +4,8 @@ import ru.develgame.audiogames.entity.AudioGame;
 
 import java.util.List;
 
-public interface AudioGamesDao {
+public interface AudioGameDao {
     List<AudioGame> getAllAudioGames();
 
-    boolean addAudioGames(AudioGame audioGame);
+    boolean addAudioGame(AudioGame audioGame);
 }
