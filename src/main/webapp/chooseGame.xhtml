@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Choose Game</title>
+</h:head>
+<h:body>
+    <p:dialog id="chooseGameDlg" header="Choose Game" widgetVar="chooseGameDlg" minHeight="40" width="800" showEffect="fade" modal="true" closable="false">
+        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tbody>
+            <tr>
+                <td>
+                    <h:form>
+                        <p:selectOneRadio value="#{chooseGame.audioGameId}" id="audioGameId" layout="custom">
+                            <f:selectItems value="#{chooseGame.allGamesList}"
+                                           var="currentGame"
+                                           itemValue="#{currentGame}"
+                        </p:selectOneRadio>
+
+                        <div style="display: flex; align-items: stretch;">
+                            <p:panel header="Steel Rat" style="margin-right: 20px">
+                                <table cellspacing="0" cellpadding="0" border="0" style="height: 100px;">
+                                    <tbody>
+                                    <tr>
+                                        <td valign="middle"><p:radioButton id="steelRat" for="audioGameId" itemIndex="0"/></td>
+                                        <td><p:graphicImage name="/images/PERSON_TYPE1/walk_down1.png" style="margin-left: 30px;"/></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </p:panel>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <p:commandButton value="New Game" style="width: 150px; margin-right: 20px;" action="#{menu.game()}" update="@form"/>
+                            <p:commandButton value="Load game" style="width: 150px;" action="#{menu.chatRoom()}" update="@form"/>
+                        </div>
+
+                        <p:hotkey bind="right" update="@form" action="#{menu.game()}"/>
+                    </h:form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </p:dialog>
+
+    <h:outputScript>
+        $(document).ready(function () {
+            PF('chooseGameDlg').show();
+        });
+    </h:outputScript>
+</h:body>
+</html>
