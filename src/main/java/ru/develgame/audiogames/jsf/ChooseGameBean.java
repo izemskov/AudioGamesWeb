@@ -2,6 +2,7 @@ package ru.develgame.audiogames.jsf;
 
 import ru.develgame.audiogames.dao.AudioGameDao;
 import ru.develgame.audiogames.entity.AudioGame;
+import ru.develgame.audiogames.exception.AudioGameNotFoundException;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -17,7 +18,8 @@ public class ChooseGameBean implements Serializable {
     @Inject
     private transient AudioGameDao audioGameDao;
 
-    private AudioGame audioGame;
+    @Inject
+    private GameBean gameBean;
 
     private List<AudioGame> allAudioGamesList;
 
@@ -31,20 +33,14 @@ public class ChooseGameBean implements Serializable {
         allAudioGameIdsList = allAudioGamesList.stream().map(t -> t.getId()).collect(Collectors.toList());
     }
 
-    public void newGame() {
-        System.out.println(audioGame.getName());
-    }
+    public String newGame() {
+        AudioGame audioGame = allAudioGamesList.stream()
+                .filter(t -> t.getId() == audioGameId.intValue())
+                .findFirst()
+                .orElseThrow(() -> new AudioGameNotFoundException("Audio game not found"));
+        gameBean.newAudioGame(audioGame.getId());
 
-    public void listener() {
-        System.out.println("test");
-    }
-
-    public AudioGame getAudioGame() {
-        return audioGame;
-    }
-
-    public void setAudioGame(AudioGame audioGame) {
-        this.audioGame = audioGame;
+        return "GAME";
     }
 
     public List<AudioGame> getAllAudioGamesList() {

@@ -11,12 +11,18 @@
     <h:outputStylesheet name="css/styles.css"/>
 </h:head>
 <h:body style="margin: 0;">
-    <p:card style="width: 25rem; margin-bottom: 2em">
+    <p:card style="width: 500px;">
         <f:facet name="title">
-            #{game.chapter.chapterName}
+            #{game.audioGameChapter.chapterName}
         </f:facet>
 
-        <p>#{game.chapter.chapterText}</p>
+        <p>#{game.audioGameChapter.chapterText}</p>
+
+        <f:facet name="footer">
+            <ui:repeat value="#{game.links}" var="link">
+                <p:commandButton value="#{link}"/>
+            </ui:repeat>
+        </f:facet>
     </p:card>
 </h:body>
 </html>

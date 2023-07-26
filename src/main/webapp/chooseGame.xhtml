@@ -16,11 +16,8 @@
             <tr>
                 <td>
                     <h:form>
-                        <p:selectOneRadio value="#{chooseGame.audioGame}" id="audioGameChooser" layout="custom">
-                            <f:selectItems value="#{chooseGame.allAudioGamesList}"
-                                           var="audioGame"
-                                           itemValue="#{audioGame}"/>
-                            <p:ajax event="change" process="@this @form:audioGamesContainer" listener="#{chooseGame.listener()}" update="@form" />
+                        <p:selectOneRadio value="#{chooseGame.audioGameId}" id="audioGameChooser" layout="custom">
+                            <f:selectItems value="#{chooseGame.allAudioGameIdsList}" var="audioGameId" itemValue="#{audioGameId}"/>
                         </p:selectOneRadio>
 
                         <h:panelGroup layout="block" id="audioGamesContainer" style="display: flex; align-items: stretch;">
@@ -29,7 +26,8 @@
                                     <table cellspacing="0" cellpadding="0" border="0" style="height: 100px;">
                                         <tbody>
                                         <tr>
-                                            <td valign="middle"><p:radioButton id="audiogame_#{audioGame.id}" for="@form:audioGameChooser" itemIndex="#{status.index}"/></td>
+                                            <td valign="middle"><p:radioButton for="@form:audioGameChooser" itemIndex="#{status.index}"/></td>
+                                            <td><p:graphicImage name="/images/#{audioGame.folder}/title.jpg" style="margin-left: 30px;"/></td>
                                         </tr>
                                         </tbody>
                                     </table>
