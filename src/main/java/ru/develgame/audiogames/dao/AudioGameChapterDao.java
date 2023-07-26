@@ -6,4 +6,6 @@ public interface AudioGameChapterDao {
     boolean addAudioGameChapter(AudioGameChapter audioGameChapter);
 
     AudioGameChapter getFirstAudioGameChapterByAudioGameId(int audioGameId);
+
+    AudioGameChapter getChapterByAudioGameIdAndChapterNum(int audioGameId, String chapterNum);
 }

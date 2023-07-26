@@ -44,4 +44,13 @@ public class AudioGameChapterDaoImpl implements AudioGameChapterDao {
         query.setParameter(1, audioGameId);
         return (AudioGameChapter) query.getSingleResult();
     }
+
+    @Override
+    public AudioGameChapter getChapterByAudioGameIdAndChapterNum(int audioGameId, String chapterNum) {
+        Query query = entityManager.createNativeQuery("SELECT * FROM APP.AUDIOGAME_CHAPTER WHERE AUDIOGAME_ID=?1 AND CHAPTER_NUM=?2 " +
+                "ORDER BY CHAPTER_NUM OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY", AudioGameChapter.class);
+        query.setParameter(1, audioGameId);
+        query.setParameter(2, chapterNum);
+        return (AudioGameChapter) query.getSingleResult();
+    }
 }

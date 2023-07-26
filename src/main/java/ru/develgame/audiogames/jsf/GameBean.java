@@ -41,6 +41,19 @@ public class GameBean implements Serializable {
             throw new AudioGameChapterNotFoundException("Audio game chapter not found");
         }
 
+        updateLinks();
+    }
+
+    public void selectNextChapter(String chapterNum) {
+        audioGameChapter = audioGameChapterDao.getChapterByAudioGameIdAndChapterNum(audioGame.getId(), chapterNum);
+        if (audioGameChapter == null) {
+            throw new AudioGameChapterNotFoundException("Audio game chapter not found");
+        }
+
+        updateLinks();
+    }
+
+    private void updateLinks() {
         links = new ArrayList<>();
         if (audioGameChapter.getChapterLink() != null) {
             links.addAll(Arrays.asList(audioGameChapter.getChapterLink().split(",")));

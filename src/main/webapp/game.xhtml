@@ -11,18 +11,20 @@
     <h:outputStylesheet name="css/styles.css"/>
 </h:head>
 <h:body style="margin: 0;">
-    <p:card style="width: 500px;">
-        <f:facet name="title">
-            #{game.audioGameChapter.chapterName}
-        </f:facet>
+    <h:form>
+        <p:card style="width: 800px; margin: 15px;">
+            <f:facet name="title">
+                #{game.audioGameChapter.chapterName}
+            </f:facet>
 
-        <p>#{game.audioGameChapter.chapterText}</p>
+            <p>#{game.audioGameChapter.chapterText}</p>
 
-        <f:facet name="footer">
-            <ui:repeat value="#{game.links}" var="link">
-                <p:commandButton value="#{link}"/>
-            </ui:repeat>
-        </f:facet>
-    </p:card>
+            <f:facet name="footer">
+                <ui:repeat value="#{game.links}" var="link">
+                    <p:commandButton value="#{link}" action="#{game.selectNextChapter(link)}" update="@form" style="margin-right: 10px;"/>
+                </ui:repeat>
+            </f:facet>
+        </p:card>
+    </h:form>
 </h:body>
 </html>
