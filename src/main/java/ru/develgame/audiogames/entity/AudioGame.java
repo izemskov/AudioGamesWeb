@@ -2,6 +2,7 @@ package ru.develgame.audiogames.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "AUDIOGAME", schema = "APP")
@@ -47,5 +48,18 @@ public class AudioGame implements Serializable {
 
     public void setFolder(String folder) {
         this.folder = folder;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AudioGame audioGame = (AudioGame) o;
+        return id == audioGame.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

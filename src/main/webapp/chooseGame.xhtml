@@ -16,31 +16,31 @@
             <tr>
                 <td>
                     <h:form>
-                        <p:selectOneRadio value="#{chooseGame.audioGameId}" id="audioGameId" layout="custom">
-                            <f:selectItems value="#{chooseGame.allGamesList}"
-                                           var="currentGame"
-                                           itemValue="#{currentGame}"
+                        <p:selectOneRadio value="#{chooseGame.audioGame}" id="audioGameChooser" layout="custom">
+                            <f:selectItems value="#{chooseGame.allAudioGamesList}"
+                                           var="audioGame"
+                                           itemValue="#{audioGame}"/>
+                            <p:ajax event="change" process="@this @form:audioGamesContainer" listener="#{chooseGame.listener()}" update="@form" />
                         </p:selectOneRadio>
 
-                        <div style="display: flex; align-items: stretch;">
-                            <p:panel header="Steel Rat" style="margin-right: 20px">
-                                <table cellspacing="0" cellpadding="0" border="0" style="height: 100px;">
-                                    <tbody>
-                                    <tr>
-                                        <td valign="middle"><p:radioButton id="steelRat" for="audioGameId" itemIndex="0"/></td>
-                                        <td><p:graphicImage name="/images/PERSON_TYPE1/walk_down1.png" style="margin-left: 30px;"/></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </p:panel>
-                        </div>
+                        <h:panelGroup layout="block" id="audioGamesContainer" style="display: flex; align-items: stretch;">
+                            <ui:repeat value="#{chooseGame.allAudioGamesList}" var="audioGame" varStatus="status">
+                                <p:panel header="#{audioGame.name}" style="margin-right: 20px">
+                                    <table cellspacing="0" cellpadding="0" border="0" style="height: 100px;">
+                                        <tbody>
+                                        <tr>
+                                            <td valign="middle"><p:radioButton id="audiogame_#{audioGame.id}" for="@form:audioGameChooser" itemIndex="#{status.index}"/></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </p:panel>
+                            </ui:repeat>
+                        </h:panelGroup>
 
                         <div style="margin-top: 20px;">
-                            <p:commandButton value="New Game" style="width: 150px; margin-right: 20px;" action="#{menu.game()}" update="@form"/>
-                            <p:commandButton value="Load game" style="width: 150px;" action="#{menu.chatRoom()}" update="@form"/>
+                            <p:commandButton value="New Game" style="width: 150px; margin-right: 20px;" action="#{chooseGame.newGame()}" update="@form"/>
+                            <p:commandButton value="Load game" style="width: 150px;" update="@form"/>
                         </div>
-
-                        <p:hotkey bind="right" update="@form" action="#{menu.game()}"/>
                     </h:form>
                 </td>
             </tr>
