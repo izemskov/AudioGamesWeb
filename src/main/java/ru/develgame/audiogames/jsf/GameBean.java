@@ -2,6 +2,7 @@ package ru.develgame.audiogames.jsf;
 
 import ru.develgame.audiogames.dao.AudioGameChapterDao;
 import ru.develgame.audiogames.dao.AudioGameDao;
+import ru.develgame.audiogames.dao.AudioGameSaveDao;
 import ru.develgame.audiogames.entity.AudioGame;
 import ru.develgame.audiogames.entity.AudioGameChapter;
 import ru.develgame.audiogames.exception.AudioGameChapterNotFoundException;
@@ -23,6 +24,9 @@ public class GameBean implements Serializable {
 
     @Inject
     private transient AudioGameChapterDao audioGameChapterDao;
+
+    @Inject
+    private transient AudioGameSaveDao audioGameSaveDao;
 
     private AudioGame audioGame;
 
@@ -58,6 +62,10 @@ public class GameBean implements Serializable {
         if (audioGameChapter.getChapterLink() != null) {
             links.addAll(Arrays.asList(audioGameChapter.getChapterLink().split(",")));
         }
+    }
+
+    public void saveGame() {
+        audioGameSaveDao.saveGame(audioGame.getId(), audioGameChapter.getChapterNum());
     }
 
     public AudioGameChapter getAudioGameChapter() {

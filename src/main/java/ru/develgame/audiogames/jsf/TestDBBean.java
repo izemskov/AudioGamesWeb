@@ -102,7 +102,7 @@ public class TestDBBean implements Serializable {
                 line = line.replaceAll("<a href=\\\"#\\d+\\\">(\\d+)</a>", "$1");
                 String chapterText = audioGameChapter.getChapterText();
                 if (chapterText != null) {
-                    chapterText += " " + line;
+                    chapterText += "<br/>" + line;
                 }
                 else {
                     chapterText = line;
