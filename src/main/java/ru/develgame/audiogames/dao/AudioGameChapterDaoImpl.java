@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.UserTransaction;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,7 +43,11 @@ public class AudioGameChapterDaoImpl implements AudioGameChapterDao {
         Query query = entityManager.createNativeQuery("SELECT * FROM APP.AUDIOGAME_CHAPTER WHERE AUDIOGAME_ID=?1 " +
                 "ORDER BY CHAPTER_NUM OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY", AudioGameChapter.class);
         query.setParameter(1, audioGameId);
-        return (AudioGameChapter) query.getSingleResult();
+        List<AudioGameChapter> resultList = query.getResultList();
+        if (resultList.isEmpty()) {
+            return null;
+        }
+        return resultList.get(0);
     }
 
     @Override
@@ -51,6 +56,10 @@ public class AudioGameChapterDaoImpl implements AudioGameChapterDao {
                 "ORDER BY CHAPTER_NUM OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY", AudioGameChapter.class);
         query.setParameter(1, audioGameId);
         query.setParameter(2, chapterNum);
-        return (AudioGameChapter) query.getSingleResult();
+        List<AudioGameChapter> resultList = query.getResultList();
+        if (resultList.isEmpty()) {
+            return null;
+        }
+        return resultList.get(0);
     }
 }

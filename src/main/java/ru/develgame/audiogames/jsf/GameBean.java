@@ -5,6 +5,7 @@ import ru.develgame.audiogames.dao.AudioGameDao;
 import ru.develgame.audiogames.dao.AudioGameSaveDao;
 import ru.develgame.audiogames.entity.AudioGame;
 import ru.develgame.audiogames.entity.AudioGameChapter;
+import ru.develgame.audiogames.entity.AudioGameSave;
 import ru.develgame.audiogames.exception.AudioGameChapterNotFoundException;
 import ru.develgame.audiogames.exception.AudioGameNotFoundException;
 
@@ -40,24 +41,33 @@ public class GameBean implements Serializable {
             throw new AudioGameNotFoundException(String.format("Audio game with id %s not found", audioGameId));
         }
 
-        audioGameChapter = audioGameChapterDao.getFirstAudioGameChapterByAudioGameId(audioGameId);
+        loadChapterByNum(null);
+    }
+
+    public void loadAudioGame(int audioGameId) {
+        AudioGameSave audioGameSave = audioGameSaveDao.loadGame(audioGameId);
+        if (audioGameSave != null) {
+            audioGame = audioGameDao.getAudioGame(audioGameId);
+            if (audioGame == null) {
+                throw new AudioGameNotFoundException(String.format("Audio game with id %s not found", audioGameId));
+            }
+
+            loadChapterByNum(audioGameSave.getChapterNum());
+        }
+    }
+
+    public void loadChapterByNum(String chapterNum) {
+        if (chapterNum == null) {
+            audioGameChapter = audioGameChapterDao.getFirstAudioGameChapterByAudioGameId(audioGame.getId());
+        }
+        else {
+            audioGameChapter = audioGameChapterDao.getChapterByAudioGameIdAndChapterNum(audioGame.getId(), chapterNum);
+        }
+
         if (audioGameChapter == null) {
             throw new AudioGameChapterNotFoundException("Audio game chapter not found");
         }
 
-        updateLinks();
-    }
-
-    public void selectNextChapter(String chapterNum) {
-        audioGameChapter = audioGameChapterDao.getChapterByAudioGameIdAndChapterNum(audioGame.getId(), chapterNum);
-        if (audioGameChapter == null) {
-            throw new AudioGameChapterNotFoundException("Audio game chapter not found");
-        }
-
-        updateLinks();
-    }
-
-    private void updateLinks() {
         links = new ArrayList<>();
         if (audioGameChapter.getChapterLink() != null) {
             links.addAll(Arrays.asList(audioGameChapter.getChapterLink().split(",")));
@@ -66,6 +76,13 @@ public class GameBean implements Serializable {
 
     public void saveGame() {
         audioGameSaveDao.saveGame(audioGame.getId(), audioGameChapter.getChapterNum());
+    }
+
+    public void loadGame() {
+        AudioGameSave audioGameSave = audioGameSaveDao.loadGame(audioGame.getId());
+        if (audioGameSave != null) {
+            loadChapterByNum(audioGameSave.getChapterNum());
+        }
     }
 
     public AudioGameChapter getAudioGameChapter() {

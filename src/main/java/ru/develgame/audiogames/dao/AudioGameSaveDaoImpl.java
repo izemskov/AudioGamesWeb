@@ -29,6 +29,21 @@ public class AudioGameSaveDaoImpl implements AudioGameSaveDao {
     private UserBean userBean;
 
     @Override
+    public AudioGameSave loadGame(int audioGameId) {
+        Query query = entityManager.createNativeQuery("SELECT * FROM APP.AUDIOGAME_SAVE WHERE AUDIOGAME_ID=?1 " +
+                "AND USERNAME=?2 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY", AudioGameSave.class);
+        query.setParameter(1, audioGameId);
+        query.setParameter(2, userBean.getUsername());
+        List<AudioGameSave> resultList = query.getResultList();
+
+        if (resultList.isEmpty()) {
+            return null;
+        }
+
+        return resultList.get(0);
+    }
+
+    @Override
     public boolean saveGame(int audioGameId, String chapterNum) {
         try {
             userTransaction.begin();

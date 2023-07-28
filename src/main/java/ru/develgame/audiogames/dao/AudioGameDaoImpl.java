@@ -36,7 +36,11 @@ public class AudioGameDaoImpl implements AudioGameDao {
     public AudioGame getAudioGame(int id) {
         Query query = entityManager.createNativeQuery("SELECT ID, NAME, FOLDER FROM APP.AUDIOGAME WHERE ID=?1", AudioGame.class);
         query.setParameter(1, id);
-        return (AudioGame) query.getSingleResult();
+        List<AudioGame> resultList = query.getResultList();
+        if (resultList.isEmpty()) {
+            return null;
+        }
+        return resultList.get(0);
     }
 
     @Override

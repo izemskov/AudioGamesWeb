@@ -37,7 +37,7 @@
 
                         <div style="margin-top: 20px;">
                             <p:commandButton value="New Game" style="width: 150px; margin-right: 20px;" action="#{chooseGame.newGame()}" update="@form"/>
-                            <p:commandButton value="Load game" style="width: 150px;" update="@form"/>
+                            <p:commandButton value="Load game" style="width: 150px;" action="#{chooseGame.loadGame()}" update="@form"/>
                         </div>
                     </h:form>
                 </td>

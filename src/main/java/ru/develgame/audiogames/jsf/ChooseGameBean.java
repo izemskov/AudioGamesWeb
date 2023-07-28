@@ -43,6 +43,16 @@ public class ChooseGameBean implements Serializable {
         return "GAME";
     }
 
+    public String loadGame() {
+        AudioGame audioGame = allAudioGamesList.stream()
+                .filter(t -> t.getId() == audioGameId.intValue())
+                .findFirst()
+                .orElseThrow(() -> new AudioGameNotFoundException("Audio game not found"));
+        gameBean.loadAudioGame(audioGame.getId());
+
+        return "GAME";
+    }
+
     public List<AudioGame> getAllAudioGamesList() {
         return allAudioGamesList;
     }
