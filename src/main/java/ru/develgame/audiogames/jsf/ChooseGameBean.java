@@ -34,6 +34,10 @@ public class ChooseGameBean implements Serializable {
     }
 
     public String newGame() {
+        if (audioGameId == null && !allAudioGamesList.isEmpty()) {
+            audioGameId = allAudioGamesList.get(0).getId();
+        }
+
         AudioGame audioGame = allAudioGamesList.stream()
                 .filter(t -> t.getId() == audioGameId.intValue())
                 .findFirst()
