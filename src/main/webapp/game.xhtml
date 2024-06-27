@@ -14,29 +14,42 @@
     <h:panelGroup layout="block" style="display: flex; align-items: stretch;">
         <h:form>
             <h:panelGroup layout="block">
-            <p:card style="width: 800px; margin: 15px;">
-                <f:facet name="title">
-                    #{game.audioGameChapter.chapterName}
-                </f:facet>
+                <p:card style="width: 800px; margin: 15px;">
+                    <f:facet name="title">
+                        #{game.audioGameChapter.chapterName}
+                    </f:facet>
 
-                <p><h:outputText value="#{game.audioGameChapter.chapterText}" escape="false"/></p>
+                    <p><h:outputText value="#{game.audioGameChapter.chapterText}" escape="false"/></p>
 
-                <f:facet name="footer">
-                    <ui:repeat value="#{game.links}" var="link">
-                        <p:commandButton value="#{link}" action="#{game.loadChapterByNum(link)}" update="@form" style="margin-right: 10px;"/>
-                    </ui:repeat>
-                </f:facet>
-            </p:card>
+                    <f:facet name="footer">
+                        <ui:repeat value="#{game.links}" var="link">
+                            <p:commandButton value="#{link}" action="#{game.loadChapterByNum(link)}" update="@form" style="margin-right: 10px;"/>
+                        </ui:repeat>
+                    </f:facet>
+                </p:card>
+
+                <p:audio style="margin: 15px;"
+                         value="#{game.audioFile}"
+                         player="mp3"
+                         autoplay="#{game.autoplay}"
+                         controls="true">
+                    Your browser does not support the audio element.
+                </p:audio>
             </h:panelGroup>
 
             <h:panelGroup layout="block">
-            <p:card style="width: 800px; margin: 15px;">
+            <p:card style="width: 800px; margin: 15px;" id="menuCard">
                 <f:facet name="title">
                     Menu
                 </f:facet>
 
                 <p:commandButton icon="pi pi-save" action="#{game.saveGame()}" styleClass="rounded-button ui-button-info" style="margin-right: 10px;" />
                 <p:commandButton icon="pi pi-folder-open" action="#{game.loadGame()}" styleClass="rounded-button ui-button-info" update="@form"/>
+                <p:selectBooleanCheckbox
+                        value="#{game.autoplay}"
+                        style="margin-left: 10px;"
+                        itemLabel="Autoplay"
+                        update="@form:menuCard"/>
             </p:card>
             </h:panelGroup>
         </h:form>

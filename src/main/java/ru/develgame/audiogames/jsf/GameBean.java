@@ -35,6 +35,8 @@ public class GameBean implements Serializable {
 
     private List<String> links;
 
+    private Boolean autoplay = false;
+
     public void newAudioGame(int audioGameId) {
         audioGame = audioGameDao.getAudioGame(audioGameId);
         if (audioGame == null) {
@@ -85,11 +87,24 @@ public class GameBean implements Serializable {
         }
     }
 
+    public String getAudioFile() {
+        return String.format("/resources/audiogames/%s/chapter_%03d.mp3", audioGame.getFolder(),
+                Integer.parseInt(audioGameChapter.getChapterNum()));
+    }
+
     public AudioGameChapter getAudioGameChapter() {
         return audioGameChapter;
     }
 
     public List<String> getLinks() {
         return links;
+    }
+
+    public Boolean getAutoplay() {
+        return autoplay;
+    }
+
+    public void setAutoplay(Boolean autoplay) {
+        this.autoplay = autoplay;
     }
 }
