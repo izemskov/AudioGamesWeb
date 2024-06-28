@@ -10,6 +10,8 @@ import ru.develgame.audiogames.exception.AudioGameChapterNotFoundException;
 import ru.develgame.audiogames.exception.AudioGameNotFoundException;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -76,8 +78,14 @@ public class GameBean implements Serializable {
         }
     }
 
+    public void addMessage(String summary, String detail) {
+        FacesContext.getCurrentInstance()
+                .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
+    }
+
     public void saveGame() {
         audioGameSaveDao.saveGame(audioGame.getId(), audioGameChapter.getChapterNum());
+        addMessage("Saved", "The game successfully saved");
     }
 
     public void loadGame() {
