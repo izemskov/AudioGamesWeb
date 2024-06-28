@@ -31,13 +31,12 @@ public class ChooseGameBean implements Serializable {
     public void init() {
         allAudioGamesList = audioGameDao.getAllAudioGames();
         allAudioGameIdsList = allAudioGamesList.stream().map(t -> t.getId()).collect(Collectors.toList());
+        if (!allAudioGamesList.isEmpty()) {
+            audioGameId = allAudioGamesList.get(0).getId();
+        }
     }
 
     public String newGame() {
-        if (audioGameId == null && !allAudioGamesList.isEmpty()) {
-            audioGameId = allAudioGamesList.get(0).getId();
-        }
-
         AudioGame audioGame = allAudioGamesList.stream()
                 .filter(t -> t.getId() == audioGameId.intValue())
                 .findFirst()
