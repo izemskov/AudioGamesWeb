@@ -49,12 +49,21 @@
                                  styleClass="rounded-button ui-button-info"
                                  style="margin-right: 10px;"
                                  update="growl"/>
-                <p:commandButton icon="pi pi-folder-open" action="#{game.loadGame()}" styleClass="rounded-button ui-button-info" update="@form"/>
+                <p:commandButton icon="pi pi-folder-open"
+                                 action="#{game.loadGame()}"
+                                 styleClass="rounded-button ui-button-info"
+                                 update="@form">
+                    <p:confirm header="Confirmation" message="Are you sure you want to load the game?" icon="pi pi-exclamation-triangle"/>
+                </p:commandButton>
                 <p:selectBooleanCheckbox
                         value="#{game.autoplay}"
                         style="margin-left: 10px;"
                         itemLabel="Autoplay"
                         update="@form:menuCard"/>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
+                </p:confirmDialog>
             </p:card>
             </h:panelGroup>
         </h:form>
