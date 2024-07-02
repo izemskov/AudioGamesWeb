@@ -24,7 +24,10 @@
 
                     <f:facet name="footer">
                         <ui:repeat value="#{game.links}" var="link">
-                            <p:commandButton value="#{link}" action="#{game.loadChapterByNum(link)}" update="@form" style="margin-right: 10px;"/>
+                            <p:commandButton value="#{link}"
+                                             action="#{game.loadChapterByNum(link)}"
+                                             update="@form"
+                                             style="margin-right: 10px; font-size: 1.3rem; width: 100px; height: 50px;"/>
                         </ui:repeat>
                     </f:facet>
                 </p:card>
@@ -47,11 +50,12 @@
                 <p:commandButton icon="pi pi-save"
                                  action="#{game.saveGame()}"
                                  styleClass="rounded-button ui-button-info"
-                                 style="margin-right: 10px;"
+                                 style="margin-right: 10px; width: 50px; height: 50px;"
                                  update="growl"/>
                 <p:commandButton icon="pi pi-folder-open"
                                  action="#{game.loadGame()}"
                                  styleClass="rounded-button ui-button-info"
+                                 style="width: 50px; height: 50px;"
                                  update="@form">
                     <p:confirm header="Confirmation" message="Are you sure you want to load the game?" icon="pi pi-exclamation-triangle"/>
                 </p:commandButton>
