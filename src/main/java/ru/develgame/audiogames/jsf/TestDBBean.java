@@ -111,4 +111,74 @@ public class TestDBBean implements Serializable {
             }
         }
     }
+
+    public void parser2() throws IOException {
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        try (InputStream inputStream = servletContext.getResourceAsStream("/resources/in1.txt")) {
+            String[] lines = IOUtils.toString(inputStream, StandardCharsets.UTF_8).split("\n");
+
+            Pattern newChapterPattern = Pattern.compile("<a name=\\\".*?\\\"></a>(.*?)<br></h1>", Pattern.CASE_INSENSITIVE);
+            Pattern chapterLinkPattern = Pattern.compile("<i>.*?(\\d+).*?</i>", Pattern.CASE_INSENSITIVE);
+
+            AudioGameChapter audioGameChapter = null;
+            for (String line : lines) {
+                line = line.trim();
+
+                Matcher matcher = newChapterPattern.matcher(line);
+                if (matcher.matches()) {
+                    if (audioGameChapter != null) {
+                        if (audioGameChapter.getChapterName() == null || audioGameChapter.getChapterName().isEmpty()
+                                || audioGameChapter.getChapterNum() == null || audioGameChapter.getChapterNum().isEmpty()
+                                || audioGameChapter.getChapterText() == null || audioGameChapter.getChapterText().isEmpty()) {
+                            throw new RuntimeException();
+                        }
+
+                        audioGameChapterDao.addAudioGameChapter(audioGameChapter);
+                    }
+
+                    audioGameChapter = new AudioGameChapter();
+                    audioGameChapter.setAudioGameId(101);
+                    audioGameChapter.setChapterName(matcher.group(1)
+                            .replaceAll("<i>", "")
+                            .replaceAll("</i>", ""));
+                    audioGameChapter.setChapterNum(audioGameChapter.getChapterName());
+
+                } else if (audioGameChapter != null) {
+                    line = line.replaceAll("<div>", "")
+                            .replaceAll("</div>", "")
+                            .replaceAll("<blockquote>", "")
+                            .replaceAll("</blockquote>", "")
+                            .replaceAll("<br>", "<br/>")
+                            .replaceAll("<h5>", "")
+                            .replaceAll("</h5>", "")
+                            .replaceAll("<h1.*?>", "");
+
+                    matcher = chapterLinkPattern.matcher(line);
+                    while (matcher.find()) {
+                        String link = matcher.group(1);
+                        String chapterLink = audioGameChapter.getChapterLink();
+                        if (chapterLink != null) {
+                            chapterLink += "," + link;
+                        }
+                        else {
+                            chapterLink = link;
+                        }
+                        audioGameChapter.setChapterLink(chapterLink);
+                    }
+
+                    line = line.replaceAll("<i>", "")
+                            .replaceAll("</i>", "");
+
+                    String chapterText = audioGameChapter.getChapterText();
+                    if (chapterText != null) {
+                        chapterText += "<br/>" + line;
+                    }
+                    else {
+                        chapterText = line;
+                    }
+                    audioGameChapter.setChapterText(chapterText);
+                }
+            }
+        }
+    }
 }
