@@ -57,6 +57,7 @@ public class GameBean implements Serializable {
             }
 
             loadChapterByNum(audioGameSave.getChapterNum());
+            autoplay = audioGameSave.isAutoplay();
         }
     }
 
@@ -84,7 +85,7 @@ public class GameBean implements Serializable {
     }
 
     public void saveGame() {
-        audioGameSaveDao.saveGame(audioGame.getId(), audioGameChapter.getChapterNum());
+        audioGameSaveDao.saveGame(audioGame.getId(), audioGameChapter.getChapterNum(), autoplay);
         addMessage("Saved", "The game successfully saved");
     }
 
@@ -92,6 +93,7 @@ public class GameBean implements Serializable {
         AudioGameSave audioGameSave = audioGameSaveDao.loadGame(audioGame.getId());
         if (audioGameSave != null) {
             loadChapterByNum(audioGameSave.getChapterNum());
+            autoplay = audioGameSave.isAutoplay();
         }
     }
 

@@ -44,7 +44,7 @@ public class AudioGameSaveDaoImpl implements AudioGameSaveDao {
     }
 
     @Override
-    public boolean saveGame(int audioGameId, String chapterNum) {
+    public boolean saveGame(int audioGameId, String chapterNum, boolean autoplay) {
         try {
             userTransaction.begin();
 
@@ -64,6 +64,7 @@ public class AudioGameSaveDaoImpl implements AudioGameSaveDao {
                 audioGameSave = resultList.get(0);
             }
             audioGameSave.setChapterNum(chapterNum);
+            audioGameSave.setAutoplay(autoplay);
 
             entityManager.persist(audioGameSave);
             userTransaction.commit();

@@ -19,6 +19,9 @@ public class AudioGameSave {
     @Column(name = "CHAPTER_NUM")
     private String chapterNum;
 
+    @Column(name = "AUTOPLAY")
+    private boolean autoplay;
+
     public AudioGameSave() {
     }
 
@@ -58,5 +61,13 @@ public class AudioGameSave {
 
     public void setChapterNum(String chapterNum) {
         this.chapterNum = chapterNum;
+    }
+
+    public boolean isAutoplay() {
+        return autoplay;
+    }
+
+    public void setAutoplay(boolean autoplay) {
+        this.autoplay = autoplay;
     }
 }
