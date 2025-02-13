@@ -2,13 +2,13 @@ package ru.develgame.audiogames.dao;
 
 import ru.develgame.audiogames.entity.AudioGameChapter;
 
-import javax.annotation.Resource;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.transaction.UserTransaction;
+import jakarta.annotation.Resource;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+import jakarta.transaction.UserTransaction;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

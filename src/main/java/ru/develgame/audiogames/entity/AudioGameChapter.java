@@ -1,6 +1,6 @@
 package ru.develgame.audiogames.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "AUDIOGAME_CHAPTER", schema = "APP")
